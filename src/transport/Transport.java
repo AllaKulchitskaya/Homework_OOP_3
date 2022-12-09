@@ -1,22 +1,25 @@
 package transport;
 
-public class Transport {
+public abstract class Transport {
     private final String brand;
     private final String model;
     private final int year;
     private final String country;
+    protected double fuelPercentage;
     private String color;
     private int maxSpeed;
 
-    public Transport(String brand, String model, int year, String country) {
-        this(brand, model, year, country, 120, "белый");
+    public Transport(String brand, String model, int year, String country, double fuelPercentage) {
+        this(brand, model, year, country, fuelPercentage, 120, "белый");
     }
 
-    public Transport(String brand, String model, int year, String country, int maxSpeed) {
-        this(brand, model, year, country, maxSpeed, "белый");
+    public Transport(String brand, String model, int year, String country, double fuelPercentage,
+                     int maxSpeed) {
+        this(brand, model, year, country, fuelPercentage, maxSpeed, "белый");
     }
 
-    public Transport(String brand, String model, int year, String country, int maxSpeed, String color) {
+    public Transport(String brand, String model, int year, String country, double fuelPercentage,
+                     int maxSpeed, String color) {
         if (brand == null || brand.isEmpty() || brand.isBlank()) {
             this.brand = "default";
         } else {
@@ -38,6 +41,7 @@ public class Transport {
             this.country = country;
         }
         setColor(color);
+        setFuelPercentage(fuelPercentage);
         setMaxSpeed(maxSpeed);
     }
 
@@ -78,4 +82,17 @@ public class Transport {
             this.maxSpeed = 120;
         }
     }
+
+    public double getFuelPercentage() {
+        return fuelPercentage;
+    }
+
+    public void setFuelPercentage(double fuelPercentage) {
+        this.fuelPercentage = fuelPercentage;
+        if (this.fuelPercentage < 0 || this.fuelPercentage > 100) {
+            this.fuelPercentage = 50;
+        }
+    }
+
+    public abstract void refill();
 }

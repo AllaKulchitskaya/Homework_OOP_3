@@ -7,9 +7,9 @@ public class Train extends Transport {
     private String finalStation;
     private int carriageNumber;
 
-    public Train(String brand, String model, int year, String country, int maxSpeed, int ticketCost,
+    public Train(String brand, String model, int year, String country, double fuelPercentage, int maxSpeed, int ticketCost,
                  String tripTime, String departureStation, String finalStation, int carriageNumber) {
-        super(brand, model, year, country, maxSpeed);
+        super(brand, model, year, country, fuelPercentage, maxSpeed);
         setTicketCost(ticketCost);
         setTripTime(tripTime);
         setDepartureStation(departureStation);
@@ -76,8 +76,21 @@ public class Train extends Transport {
     @Override
     public String toString() {
         return "Поезд " + this.getBrand() + ", модель " + this.getModel() + ", год выпуска - " + this.getYear() +
-                ", страна производства - " + this.getCountry() + ", скорость передвижения - " + this.getMaxSpeed() +
+                ", страна производства - " + this.getCountry() + ", количество топлива в процентах - " +
+                this.getFuelPercentage() + ", скорость передвижения - " + this.getMaxSpeed() +
                 " км/ч, станция отправления - " + departureStation + ", станция прибытия - " + finalStation +
                 ", цена поездки - " + ticketCost + " рублей, количетсво вагонов в поезде - " + carriageNumber;
+    }
+
+    @Override
+    public void refill() {
+        if (fuelPercentage < 100) {
+            this.setFuelPercentage(100);
+            System.out.println("Поезд заправляется дизелем");
+            System.out.println("Количество топлива в процентах после заправки - " + this.getFuelPercentage());
+        } else {
+            this.fuelPercentage = fuelPercentage;
+            System.out.println("Бак полный. Заправляться не нужно");
+        }
     }
 }

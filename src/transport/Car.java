@@ -12,10 +12,10 @@ public class Car extends Transport {
     private Key key;
     private Insurance insurance;
 
-    public Car(String brand, String model, int year, String country, String color,
+    public Car(String brand, String model, int year, String country, double fuelPercentage, String color,
                double engineVolume, String gearBbox, String bodywork, String registrationNumber,
                int seatNumber, boolean areTyresSnow, Key key, Insurance insurance) {
-        super(brand, model, year, country);
+        super(brand, model, year, country, fuelPercentage);
         setEngineVolume(engineVolume);
         setGearBbox(gearBbox);
         if (bodywork == null || bodywork.isEmpty() || bodywork.isBlank()) {
@@ -155,6 +155,19 @@ public class Car extends Transport {
         return true;
     }
 
+    @Override
+    public void refill() {
+        if (fuelPercentage < 100) {
+            this.setFuelPercentage(100);
+            System.out.println("Автомобиль заправляется бензином, дизелем на заправке или заряжается " +
+                    "на специальных электропарковках, если это электрока");
+            System.out.println("Количество топлива в процентах после заправки - " + this.getFuelPercentage());
+        } else {
+            this.fuelPercentage = fuelPercentage;
+            System.out.println("Бак полный. Заправляться не нужно");
+        }
+    }
+
     public static class Key {
         private final boolean remoteStart;
         private final boolean keylessAccess;
@@ -233,7 +246,8 @@ public class Car extends Transport {
 
     public String toString() {
         return this.getBrand() + " " + this.getModel() + ", " + this.getYear() + " год выпуска, страна сборки - " +
-                this.getCountry() + ", цвет кузова - " + this.getColor() + ", объем двигателя - " + this.engineVolume +
+                this.getCountry() + ", количество топлива в процентах - " + this.getFuelPercentage() +
+                ", цвет кузова - " + this.getColor() + ", объем двигателя - " + this.engineVolume +
                 " л, коробка передач - " + this.gearBbox + ", тип кузова - " + this.bodywork + ", количество мест - " +
                 this.seatNumber + ", регистрационный номер - " + this.registrationNumber + ", зимняя ли резина - " +
                 this.areTyresSnow + ", " + this.key + ". Данные о страховке: " + this.insurance;
